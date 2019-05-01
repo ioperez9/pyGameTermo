@@ -43,9 +43,10 @@ class NumberInput():
             if event.unicode in "0123456789" and len(self.__strValue) < 10: #comprobar que la tecla presionas es un numero
             #if event.isdigit(): #otra manera de comprobar que lo que introduces es un número
                 self.__strValue += event.unicode #se va añadiendo a strValue los num que introduciomos con el teclado
+                self.value(self.__strValue)    #setter, para que asigne el valor de value (int) y sea lo mismo que lo que está pintado en el cuadro de texto        
             elif event.key == K_BACKSPACE: #si la tecla es retroceder
                 self.__strValue = self.__strValue[0:-1]
-                
+                self.value(self.__strValue)
     
     def value(self, val=None):
         if val == None:
