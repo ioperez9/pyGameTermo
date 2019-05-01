@@ -14,7 +14,15 @@ class NumberInput():
     
     def __init__(self, value= 0):
         self.__font = pygame.font.SysFont("Arial", 24)
-        
+        #para que solo se puedan meter enteros hacemos lo siguiente:
+        self.value(value) #podemos hacerlo llamandonos a nosotros mismos def value ya comprueba que sea un entero y no tenemos que repetirnos
+        ''' sería lo mismo que esto:
+        try:
+            self.__Value = int(value) #lo transformo 1 en un entero
+            self.__strValue = str(value) #lo transformamos en cadena para poder pintarlo en la pantalla, pq solo funciona con cadenas
+        except:
+            pass
+            '''
         
     def render(self):
         textBlock = self.__font.render(self.__strValue, True, (74, 74, 74))
@@ -30,6 +38,13 @@ class NumberInput():
             '''
         return (rect, textBlock)
         
+    def on_event(self, event):    
+        if event.type == KEYDOWN:
+            if event.unicode in "0123456789": #comprobar que la tecla presionas es un numero
+            '''if event.isdigit(): #otra manera de comprobar que lo que introduces es un número'''
+    
+    
+    
     def value(self, val=None):
         if val == None:
             return self._value
@@ -124,6 +139,9 @@ class MainApp():
             for event in pygame.event.get():
                 if event.type == QUIT:
                     self.__on_close()
+                
+                self.entrada.on_event()
+
                     
             self.__screen.blit(self.termometro.custome, (30, 150)) #dibuje el termometro en su posicion   
             
