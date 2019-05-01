@@ -6,7 +6,7 @@ class Termometro():
         self.custome = pygame.image.load("images/term.png")
         
 
-class NumberImput():
+class NumberInput():
     __value = 0
     __strValue = "0"
     __position = [0,0]
@@ -17,7 +17,7 @@ class NumberImput():
         
         
     def render(self):
-        testBlock = self.__font.render(self.__strValue, True (74, 74, 74))
+        textBlock = self.__font.render(self.__strValue, True, (74, 74, 74))
         rect = textBlock.get_rect()
         rect.left = self.__position[0]
         rect.top = self.__position[1]
@@ -31,7 +31,7 @@ class NumberImput():
         return (rect, textBlock)
         
     def value(self, val=None):
-        if val=None:
+        if val == None:
             return self._value
         else:
             val = str(val) #convertir lo que metamos en una cadena
@@ -98,7 +98,7 @@ class NumberImput():
                 pass     
     
 
-class mainApp():
+class MainApp():
     termometro = None
     entrada = None
     selector = None
@@ -125,14 +125,18 @@ class mainApp():
                 if event.type == QUIT:
                     self.__on_close()
                     
-            self.__screen.blit(self.termometro.custome, (30, 150)) #dibuje el termometro   
-            text = self.entrada.render()
-            pygame.draw.rect(self.__screen, (255, 255, 255), text[0]) #pintar reclangulo blanco 
+            self.__screen.blit(self.termometro.custome, (30, 150)) #dibuje el termometro en su posicion   
+            
+            #pintamos el cuadro de texto
+            text = self.entrada.render() #obtenemos rectángulo blanci y foto de texto y lo asignamos a text
+            pygame.draw.rect(self.__screen, (255, 255, 255), text[0]) #pintar reclangulo blanco con sus datos(posicion y tamaño text[0])
+            self.__screen.blit(text[1], self.entrada.pos()) #esto es para pintar el num 0 (text[1])
+            
             pygame.display.flip()
             
                        
     
 if __name__ == "__main__":
     pygame.init()
-    app = mainApp()
+    app = MainApp()
     app.start()
