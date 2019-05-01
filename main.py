@@ -21,6 +21,15 @@ class Selector():
         else:
             return self.__customes[1]
         
+    def on_event(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if self.__tipoUnidad == "F":
+                self.__tipoUnidad = "C"
+            else:
+                self.__tipoUnidad = "F"
+        
+    
+        
     
 
 class NumberInput():
@@ -162,9 +171,14 @@ class MainApp():
                     self.__on_close()
                 
                 self.entrada.on_event(event)
+                
+                self.selector.on_event(event)
+                
+            #Pintamos el fondo de pantalla
+            self.__screen.fill((244, 236, 203)) 
 
-                    
-            self.__screen.blit(self.termometro.custome, (5, 150)) #dibuje el termometro en su posicion   
+            #dibuje el termometro en su posicion        
+            self.__screen.blit(self.termometro.custome, (5, 150))   
             
             #pintamos el cuadro de texto
             text = self.entrada.render() #obtenemos rectángulo blanco y foto de texto y lo asignamos a text
