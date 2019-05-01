@@ -5,10 +5,27 @@ class Termometro():
     def __init__(self):
         self.custome = pygame.image.load("images/term.png")
         
+class Selector():
+    __tipoUnidad = None
+    
+    def __init__(self, unidad= "C"):
+        self.__customes = []
+        self.__customes.append(pygame.image.load("images/posiF.png"))
+        self.__customes.append(pygame.image.load("images/posiC.png"))
+        
+        self.__tipoUnidad = unidad
+        
+    def custome(self):
+        if self.__tipoUnidad == "F":
+            return self.__customes[0]
+        else:
+            return self.__customes[1]
+        
+    
 
 class NumberInput():
     __value = 0
-    __strValue = "0"
+    __strValue = ""
     __position = [0,0]
     __tamaño = [0,0]
     
@@ -45,7 +62,7 @@ class NumberInput():
                 self.__strValue += event.unicode #se va añadiendo a strValue los num que introduciomos con el teclado
                 self.value(self.__strValue)    #setter, para que asigne el valor de value (int) y sea lo mismo que lo que está pintado en el cuadro de texto        
             elif event.key == K_BACKSPACE: #si la tecla es retroceder
-                self.__strValue = self.__strValue[0:-1]
+                self.__strValue = self.__strValue[:-1]
                 self.value(self.__strValue)
     
     def value(self, val=None):
@@ -130,7 +147,8 @@ class MainApp():
         self.entrada = NumberInput()
         self.entrada.pos((106, 58))
         self.entrada.size((133,28))
-        #self.entrada.height(123)
+        
+        self.selector = Selector()
         
         
     def __on_close(self):
@@ -146,12 +164,15 @@ class MainApp():
                 self.entrada.on_event(event)
 
                     
-            self.__screen.blit(self.termometro.custome, (30, 150)) #dibuje el termometro en su posicion   
+            self.__screen.blit(self.termometro.custome, (5, 150)) #dibuje el termometro en su posicion   
             
             #pintamos el cuadro de texto
-            text = self.entrada.render() #obtenemos rectángulo blanci y foto de texto y lo asignamos a text
+            text = self.entrada.render() #obtenemos rectángulo blanco y foto de texto y lo asignamos a text
             pygame.draw.rect(self.__screen, (255, 255, 255), text[0]) #pintar reclangulo blanco con sus datos(posicion y tamaño text[0])
             self.__screen.blit(text[1], self.entrada.pos()) #esto es para pintar el num 0 (text[1])
+            
+            #pintamos el selector, con blit y le damos el disfraz y la posicion que siempre será la misma:
+            self.__screen.blit(self.selector.custome(), (112,110))
             
             pygame.display.flip()
             
