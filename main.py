@@ -40,10 +40,12 @@ class NumberInput():
         
     def on_event(self, event):    
         if event.type == KEYDOWN:
-            if event.unicode in "0123456789": #comprobar que la tecla presionas es un numero
-            '''if event.isdigit(): #otra manera de comprobar que lo que introduces es un número'''
-    
-    
+            if event.unicode in "0123456789" and len(self.__strValue) < 10: #comprobar que la tecla presionas es un numero
+            #if event.isdigit(): #otra manera de comprobar que lo que introduces es un número
+                self.__strValue += event.unicode #se va añadiendo a strValue los num que introduciomos con el teclado
+            elif event.key == K_BACKSPACE: #si la tecla es retroceder
+                self.__strValue = self.__strValue[0:-1]
+                
     
     def value(self, val=None):
         if val == None:
@@ -140,7 +142,7 @@ class MainApp():
                 if event.type == QUIT:
                     self.__on_close()
                 
-                self.entrada.on_event()
+                self.entrada.on_event(event)
 
                     
             self.__screen.blit(self.termometro.custome, (30, 150)) #dibuje el termometro en su posicion   
